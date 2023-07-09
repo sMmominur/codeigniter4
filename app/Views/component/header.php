@@ -17,7 +17,7 @@
             
 <!-- Header Title -->
 <div class="page-title-box">
-    <h3>BandName</h3>
+    <h3>Learn First</h3>
 </div>
 <!-- /Header Title -->
             
@@ -41,7 +41,7 @@
     <!-- /Search -->
             
     <!-- Flag -->
-    <?php $baseUrl = base_url() . 'public/template/assets' ?>
+    <?php $baseUrl = base_url() . 'template/assets' ?>
 
     <li class="nav-item dropdown has-arrow flag-nav">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
@@ -222,17 +222,17 @@
         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
             <span class="user-img"><img src="<?= $baseUrl ?>/img/profiles/profile_pic.jpg" alt="">
             <span class="status online"></span></span>
-            <span>User Name</span>
+            <span>Mominur</span>
         </a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="{{url('/user-profile')}}">Profile</a>
+            <a class="dropdown-item" href="">Profile</a>
             <a class="dropdown-item" href="#">Setting</a>
 
             <a class="dropdown-item" href="" onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">Logout</a>
 
             <form id="logout-form" action="" method="POST" class="d-none">
-                @csrf
+               
             </form>
 
         </div>
@@ -250,7 +250,7 @@
             document.getElementById('logout-form').submit();">Logout</a>
 
             <form id="logout-form" action="" method="POST" class="d-none">
-                @csrf
+                
             </form>
     </div>
 </div>
