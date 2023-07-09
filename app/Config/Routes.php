@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Controllers\ExamCategoryController;
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -30,6 +31,14 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+
+$routes->get('exam-category', 'ExamCategoryController::index');
+$routes->get('exam-category/create', 'ExamCategoryController::create');
+$routes->post('exam-category/store', 'ExamCategoryController::store');
+$routes->get('exam-category/edit/(:num)', 'ExamCategoryController::edit/$1');
+$routes->post('exam-category/update/(:num)', 'ExamCategoryController::update/$1');
+$routes->get('exam-category/delete/(:num)', 'ExamCategoryController::delete/$1');
+
 
 /*
  * --------------------------------------------------------------------
