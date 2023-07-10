@@ -7,10 +7,16 @@ use CodeIgniter\Controller;
 
 class ExamCategoryController extends Controller
 {
+    protected $examCategoryModel;
+
+    public function __construct()
+    {
+        $this->examCategoryModel = new ExamCategoryModel();
+    }
+
     public function index()
     {
-        $model = new ExamCategoryModel();
-        $data['categories'] = $model->findAll();
+        $data['categories'] = $this->examCategoryModel->findAll();
 
         return view('exam_categories/index', $data);
     }
@@ -19,18 +25,17 @@ class ExamCategoryController extends Controller
     {
         helper('form');
 
-        if ($this->request->getMethod() === 'post') {
-            $model = new ExamCategoryModel();
-
+        if ($this->request->getMethod() === 'post' && $this->validate([
+            'exam_category_name' => 'required',
+            'status' => 'required'
+        ])) {
             $data = [
-                'exam_category_name' => $this->request->getPost('exam_category_name'),
-                'school_id' => $this->request->getPost('school_id'),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
+                'exam_category_name' => $this->request->getVar('exam_category_name'),
+                'status' => $this->request->getVar('status')
             ];
             dd($data);
 
-            $model->insert($data);
+            $this->examCategoryModel->insert($data);
 
             return redirect()->to('/exam-category')->with('success', 'Exam category created successfully.');
         }
@@ -42,17 +47,18 @@ class ExamCategoryController extends Controller
     {
         helper('form');
 
-        $model = new ExamCategoryModel();
-        $data['category'] = $model->find($id);
+        $data['category'] = $this->examCategoryModel->find($id);
 
-        if ($this->request->getMethod() === 'post') {
-            $data = [
-                'exam_category_name' => $this->request->getPost('exam_category_name'),
-                'school_id' => $this->request->getPost('school_id'),
-                'updated_at' => date('Y-m-d H:i:s')
+        if ($this->request->getMethod() === 'post' && $this->validate([
+            'exam_category_name' => 'required',
+            'status' => 'required'
+        ])) {
+            $dataToUpdate = [
+                'exam_category_name' => $this->request->getVar('exam_category_name'),
+                'status' => $this->request->getVar('status')
             ];
 
-            $model->update($id, $data);
+            $this->examCategoryModel->update($id, $dataToUpdate);
 
             return redirect()->to('/exam-category')->with('success', 'Exam category updated successfully.');
         }
@@ -62,8 +68,7 @@ class ExamCategoryController extends Controller
 
     public function delete($id)
     {
-        $model = new ExamCategoryModel();
-        $model->delete($id);
+        $this->examCategoryModel->delete($id);
 
         return redirect()->to('/exam-category')->with('success', 'Exam category deleted successfully.');
     }

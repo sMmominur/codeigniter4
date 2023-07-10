@@ -10,7 +10,6 @@ class ExamCategoryModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = [
         'exam_category_name',
-        'school_id',
         'status',
         'created_at',
         'updated_at',

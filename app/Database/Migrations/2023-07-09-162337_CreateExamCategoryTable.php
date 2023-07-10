@@ -10,14 +10,11 @@ class CreateExamCategoryTable extends Migration
     {
         $this->forge->addField('id');
         $this->forge->addField([
-            'name' => [
+            'exam_category_name' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255,
+                'constraint' => 100,
             ],
-            'school_id' => [
-                'type' => 'INT',
-                'unsigned' => true,
-            ],
+
             'status' => [
                 'type' => 'ENUM',
                 'constraint' => ['active', 'inactive','trash'],
@@ -37,7 +34,6 @@ class CreateExamCategoryTable extends Migration
             
         ]);
         $this->forge->addKey('id', true);
-        //$this->forge->addForeignKey('school_id', 'schools', 'id');
         $this->forge->createTable('exam_category');
     }
 
