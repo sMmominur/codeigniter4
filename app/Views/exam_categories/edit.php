@@ -8,10 +8,13 @@
     <label for="exam_category_name">Exam Category Name:</label>
     <input type="text" name="exam_category_name" id="exam_category_name" value="<?= old('exam_category_name', $category['exam_category_name']) ?>">
 
-    <label for="school_id">School ID:</label>
-    <input type="text" name="school_id" id="school_id" value="<?= old('school_id', $category['school_id']) ?>">
+    <label for="status">Status:</label>
+    <select name="status" id="status">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+    </select>
 
-    <button type="submit">Update</button>
+    <input type="submit" name="submit" value="Update">
 </form>
 
 <a href="<?= base_url('exam-category') ?>">Back to Exam Categories</a>

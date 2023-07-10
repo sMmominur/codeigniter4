@@ -23,24 +23,26 @@ class ExamCategoryController extends Controller
 
     public function create()
     {
+        return view('exam_categories/create');
+    }
+
+    public function store()
+    {
+       
         helper('form');
 
-        if ($this->request->getMethod() === 'post' && $this->validate([
-            'exam_category_name' => 'required',
-            'status' => 'required'
-        ])) {
-            $data = [
-                'exam_category_name' => $this->request->getVar('exam_category_name'),
-                'status' => $this->request->getVar('status')
-            ];
-            dd($data);
+        $data = [
+            'exam_category_name' => $this->request->getVar('exam_category_name'),
+            'status' => $this->request->getVar('status'),
+            'created_at' => '2023-07-10 05:06:00',
+            'updated_at' => '2023-07-10 05:06:00'
+        ];
 
-            $this->examCategoryModel->insert($data);
-
-            return redirect()->to('/exam-category')->with('success', 'Exam category created successfully.');
-        }
-
-        return view('exam_categories/create');
+        $model = model(ExamCategoryModel::class);
+        $model->save($data);
+        
+        return redirect()->to('/exam-category')->with('success', 'Exam category created successfully.');
+    
     }
 
     public function edit($id)

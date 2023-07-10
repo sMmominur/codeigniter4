@@ -2,7 +2,7 @@
 
 <?= \Config\Services::validation()->listErrors() ?>
 
-<form action="<?= base_url('exam-category/create') ?>" method="post">
+<form action="<?= base_url('exam-category/store') ?>" method="post">
     <?= csrf_field() ?>
     <label for="exam_category_name">Exam Category Name:</label>
     <input type="text" name="exam_category_name" id="exam_category_name" value="<?= old('exam_category_name') ?>">
@@ -13,7 +13,7 @@
         <option value="inactive">Inactive</option>
     </select>
 
-    <button type="submit">Create</button>
+    <input type="submit" name="submit" value="Create">
 </form>
 
 <a href="<?= base_url('exam-category') ?>">Back to Exam Categories</a>
