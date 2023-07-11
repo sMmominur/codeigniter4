@@ -39,4 +39,13 @@ class Services extends BaseService
  
          return new \App\Services\MyService();
      }
+
+    public static function calculatorService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('calculatorService');
+        }
+
+        return new \App\Services\CalculatorService();
+    }
 }

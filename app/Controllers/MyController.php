@@ -15,4 +15,16 @@ class MyController extends BaseController
 
         echo $result;
     }
+
+    public function calculate()
+    {
+        $calculatorService = Services::calculatorService();
+
+        $numbers = [10, 5, 2];
+        $operator = '+';
+
+        $result = $calculatorService->calculate($numbers, $operator);
+
+        echo "Result: $result";
+    }
 }
