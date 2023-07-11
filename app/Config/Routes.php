@@ -39,6 +39,8 @@ $routes->get('exam-category/edit/(:num)', 'ExamCategoryController::edit/$1');
 $routes->post('exam-category/update/(:num)', 'ExamCategoryController::update/$1');
 $routes->get('exam-category/delete/(:num)', 'ExamCategoryController::delete/$1');
 
+$routes->get('my-service', 'MyController::index');
+
 
 /*
  * --------------------------------------------------------------------
