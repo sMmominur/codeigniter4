@@ -51,7 +51,11 @@ $routes->get('my-calculator', 'MyController::calculate');
  */
 $routes->get('my-cache', 'MyController::testCache');
 
+/**
+ * Trait test routes
+ */
 
+ $routes->get('my-trait', 'MyController::testTrait');
 
 /*
  * --------------------------------------------------------------------

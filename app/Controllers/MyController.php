@@ -5,8 +5,11 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use Config\Services;
 
+use App\Traits\MyTrait;
+
 class MyController extends BaseController
 {
+    use MyTrait;
     public function index()
     {
         $myService = Services::myService();
@@ -92,4 +95,11 @@ class MyController extends BaseController
                 Returns the cache driver instance being used.
         */
     }
+
+
+    public function testTrait(){
+            echo $this->greet(); 
+    }
+
+    
 }
