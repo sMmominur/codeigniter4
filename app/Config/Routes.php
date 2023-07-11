@@ -57,6 +57,12 @@ $routes->get('my-cache', 'MyController::testCache');
 
  $routes->get('my-trait', 'MyController::testTrait');
 
+ /**
+  * Helper function routes
+  */
+
+  #$routes->get('my-helper', 'MyController::testHelper');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

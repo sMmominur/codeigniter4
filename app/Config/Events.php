@@ -46,3 +46,12 @@ Events::on('pre_system', static function () {
         Services::toolbar()->respond();
     }
 });
+
+
+$events = [
+    // ...
+    'myEvent' => [
+        'App\Listeners\MyEventListener::myEventCallback'
+    ],
+];
+

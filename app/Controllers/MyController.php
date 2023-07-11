@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use Config\Services;
-
 use App\Traits\MyTrait;
+use App\Events\MyEvent;
 
 class MyController extends BaseController
 {
@@ -98,8 +98,24 @@ class MyController extends BaseController
 
 
     public function testTrait(){
+      $info = [
+         'id'         => 111,
+         'ip_address' => $this->request->getIPAddress(),
+     ];
+     
+     log_message('info', 'User {id} logged into the system from {ip_address}', $info);
             echo $this->greet(); 
     }
 
-    
+    public function testHelper(){
+        $result = my_helper_function();
+        echo $result;
+    }
+
+
+    public function startEvent(){
+      MyEvent::myEventTrigger('Event data');
+    }
+
+
 }
