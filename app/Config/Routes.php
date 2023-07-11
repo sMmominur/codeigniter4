@@ -46,6 +46,13 @@ $routes->get('my-service', 'MyController::index');
 $routes->get('my-calculator', 'MyController::calculate');
 
 
+/**
+ * Cache routes
+ */
+$routes->get('my-cache', 'MyController::testCache');
+
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
