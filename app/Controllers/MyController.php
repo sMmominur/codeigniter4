@@ -118,4 +118,14 @@ class MyController extends BaseController
     }
 
 
+    public function testAny(){
+      echo "I'm testing";
+      
+    }
+
+    public function learnRoute(){
+      echo "Hello";
+    }
+
+
 }
