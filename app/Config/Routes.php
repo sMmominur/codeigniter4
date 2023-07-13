@@ -32,6 +32,17 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+
+$routes->group('books', function ($routes) {
+  $routes->get('/', 'Books::index');
+  $routes->get('create', 'Books::create');
+  $routes->post('store', 'Books::store');
+  $routes->get('edit/(:num)', 'Books::edit/$1');
+  $routes->post('update/(:num)', 'Books::update/$1');
+  $routes->get('delete/(:num)', 'Books::delete/$1');
+});
+
+
 #$routes->get('test', 'MyController::learnRoute');
 #$routes->get('test', 'MyController');
 
