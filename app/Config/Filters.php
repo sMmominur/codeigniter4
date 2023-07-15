@@ -21,7 +21,14 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'country' => \App\Filters\CountryFilter::class,
+        'session'     => \CodeIgniter\Shield\Filters\SessionAuth::class,
+        'tokens'      => \CodeIgniter\Shield\Filters\TokenAuth::class,
+        'chain'       => \CodeIgniter\Shield\Filters\ChainAuth::class,
+        'auth-rates'  => \CodeIgniter\Shield\Filters\AuthRates::class,
+        'group'       => \CodeIgniter\Shield\Filters\GroupFilter::class,
+        'permission'  => \CodeIgniter\Shield\Filters\PermissionFilter::class,
+        'force-reset' => \CodeIgniter\Shield\Filters\ForcePasswordResetFilter::class,
+        'jwt'         => \CodeIgniter\Shield\Filters\JWTAuth::class,
     ];
 
     /**
@@ -33,6 +40,7 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+            'session' => ['except' => ['login*', 'register', 'auth/a/*']],
         ],
         'after' => [
             'toolbar',
@@ -64,8 +72,10 @@ class Filters extends BaseConfig
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
     public array $filters = [
-        'country' => [
-            'before' => ['*'],
-        ],
+        'auth-rates' => [
+        'before' => [
+            'login*', 'register', 'auth/*'
+        ]
+    ]
     ];
 }

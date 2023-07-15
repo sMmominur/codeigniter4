@@ -32,73 +32,9 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+$routes->get('dashboard', 'Home::index');
 
-$routes->group('books', function ($routes) {
-  $routes->get('/', 'Books::index');
-  $routes->get('create', 'Books::create');
-  $routes->post('store', 'Books::store');
-  $routes->get('edit/(:num)', 'Books::edit/$1');
-  $routes->post('update/(:num)', 'Books::update/$1');
-  $routes->get('delete/(:num)', 'Books::delete/$1');
-});
-
-
-#$routes->get('test', 'MyController::learnRoute');
-#$routes->get('test', 'MyController');
-
-$routes->get('test', [\App\Controllers\MyController::class, 'index']);
-
-#$routes->get('users', 'Admin\LearnController::index');
-$routes->get('users', 'LearnController::index',['namespace' => 'App\Controllers\Admin']);
-#$routes->get('users/profile', 'Users::profile', ['as' => 'profile']);
-#$routes->get('admin', ' AdminController::index', ['filter' => 'admin-auth']);
-#$routes->get('admin', ' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
-#$routes->get('admin', ' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
-#$routes->get('from', 'to', ['hostname' => 'accounts.example.com']);
-// Limit to media.example.com
-#$routes->get('from', 'to', ['subdomain' => 'media']);
-// Limit to any sub-domain
-#$routes->get('from', 'to', ['subdomain' => '*']);
-#$routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
-
-$routes->get('exam-category', 'ExamCategoryController::index');
-$routes->get('exam-category/create', 'ExamCategoryController::create');
-$routes->post('exam-category/store', 'ExamCategoryController::store');
-$routes->get('exam-category/edit/(:num)', 'ExamCategoryController::edit/$1');
-$routes->post('exam-category/update/(:num)', 'ExamCategoryController::update/$1');
-$routes->get('exam-category/delete/(:num)', 'ExamCategoryController::delete/$1');
-
-/**
- * Service Example routes
- */
-$routes->get('my-service', 'MyController::index');
-$routes->get('my-calculator', 'MyController::calculate');
-
-
-/**
- * Cache routes
- */
-$routes->get('my-cache', 'MyController::testCache');
-
-/**
- * Trait test routes
- */
-
- $routes->get('my-trait', 'MyController::testTrait');
-
-
- $routes->get('testit','MyController::testAny');
-
- /**
-  * Helper function routes
-  */
-
-  #$routes->get('my-helper', 'MyController::testHelper');
-
-  #$routes->get('product/(:num)/(:num)', [Product::class, 'index']);
-
-  // The above code is the same as the following:
-  #$routes->get('product/(:num)/(:num)', 'Product::index/$1/$2');
+service('auth')->routes($routes);
 
 
 /*

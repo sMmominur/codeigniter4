@@ -222,13 +222,19 @@
         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
             <span class="user-img"><img src="<?= $baseUrl ?>/img/profiles/profile_pic.jpg" alt="">
             <span class="status online"></span></span>
-            <span>Mominur</span>
+            <span>
+                <?php 
+                    if (auth()->loggedIn()) {
+                        echo ucwords(auth()->user()->username);
+                    }
+                ?>
+            </span>
         </a>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="">Profile</a>
             <a class="dropdown-item" href="#">Setting</a>
 
-            <a class="dropdown-item" href="" onclick="event.preventDefault();
+            <a class="dropdown-item" href="<?php echo base_url().'logout';?>" onclick=";
             document.getElementById('logout-form').submit();">Logout</a>
 
             <form id="logout-form" action="" method="POST" class="d-none">
