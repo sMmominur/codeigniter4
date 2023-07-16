@@ -6,21 +6,31 @@
 <meta name="robots" content="noindex, nofollow">
 
 <!-- Base URL for assets -->
-<?php $baseUrl = base_url() . 'template/assets' ?>
+<?php 
+    helper('html'); 
+    $urlPrefix = 'template/assets/';
+?>
 
-
+<!-- Favicon -->
+<?php echo link_tag($urlPrefix.'img/favicon.jpg', 'shortcut icon', 'image/x-icon');?>
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<?= $baseUrl ?>/css/bootstrap.min.css">
+<?php echo link_tag($urlPrefix.'css/bootstrap.min.css');?>
 
 <!-- Fontawesome CSS -->
-<link rel="stylesheet" href="<?= $baseUrl ?>/css/font-awesome.min.css">
+<?php echo link_tag($urlPrefix.'css/font-awesome.min.css');?>
 
 <!-- Lineawesome CSS -->
-<link rel="stylesheet" href="<?= $baseUrl ?>/css/line-awesome.min.css">
+<?php echo link_tag($urlPrefix.'css/line-awesome.min.css');?>
 
 <!-- Chart CSS -->
-<link rel="stylesheet" href="<?= $baseUrl ?>/plugins/morris/morris.css">
+<?php echo link_tag($urlPrefix.'plugins/morris/morris.css');?>
+
+<!-- Select2 CSS -->
+<?php echo link_tag($urlPrefix.'css/select2.min.css');?>
+
+<!-- Datatable CSS -->
+<?php echo link_tag($urlPrefix.'css/dataTables.bootstrap4.min.css');?>
 
 <!-- Main CSS -->
-<link rel="stylesheet" href="<?= $baseUrl ?>/css/style.css">
+<?php echo link_tag($urlPrefix.'css/style.css');?>

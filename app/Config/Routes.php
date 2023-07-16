@@ -30,11 +30,19 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Home::getDefaultPage');
 
 $routes->get('dashboard', 'Home::index');
 
 service('auth')->routes($routes);
+
+#$routes->get('role', 'RoleController::index');
+
+$routes->get('roles', 'RoleController::index');
+$routes->match(['get', 'post'], 'roles/create', 'RoleController::create');
+$routes->match(['get', 'post'], 'roles/edit/(:num)', 'RoleController::edit/$1');
+$routes->get('roles/delete/(:num)', 'RoleController::delete/$1');
+
 
 
 /*

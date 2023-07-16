@@ -1,18 +1,27 @@
-<?php $baseUrl = base_url() . 'template/assets' ?>
+<?php $urlPrefix = 'template/assets/' ?>
 
-<script src="<?= $baseUrl ?>/js/jquery-3.5.1.min.js"></script>
+<?php echo script_tag($urlPrefix.'js/jquery-3.5.1.min.js');?>
+
 
 <!-- Bootstrap Core JS -->
-<script src="<?= $baseUrl ?>/js/popper.min.js"></script>
-<script src="<?= $baseUrl ?>/js/bootstrap.min.js"></script>
+<?php echo script_tag($urlPrefix.'js/popper.min.js');echo PHP_EOL?>
+<?php echo script_tag($urlPrefix.'js/bootstrap.min.js');echo PHP_EOL?>
 
 <!-- Slimscroll JS -->
-<script src="<?= $baseUrl ?>/js/jquery.slimscroll.min.js"></script>
+<?php echo script_tag($urlPrefix.'js/jquery.slimscroll.min.js');?>
 
 <!-- Chart JS -->
-<script src="<?= $baseUrl ?>/plugins/morris/morris.min.js"></script>
-<script src="<?= $baseUrl ?>/plugins/raphael/raphael.min.js"></script>
-<script src="<?= $baseUrl ?>/js/chart.js"></script>
+<?php echo script_tag($urlPrefix.'plugins/morris/morris.min.js'); echo PHP_EOL?>
+<?php echo script_tag($urlPrefix.'plugins/raphael/raphael.min.js'); echo PHP_EOL?>
+<?php echo script_tag($urlPrefix.'js/chart.js');?>
+
+<!-- Select2 JS -->
+<?php echo script_tag($urlPrefix.'js/select2.min.js'); echo PHP_EOL?>
+
+<!-- Datatable JS -->
+<?php echo script_tag($urlPrefix.'js/jquery.dataTables.min.js'); echo PHP_EOL?>
+<?php echo script_tag($urlPrefix.'js/dataTables.bootstrap4.min.js'); echo PHP_EOL?>
 
 <!-- Custom JS -->
-<script src="<?= $baseUrl ?>/js/app.js"></script>
+<?php echo script_tag($urlPrefix.'js/app.js');?>
+

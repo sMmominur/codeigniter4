@@ -8,4 +8,9 @@ class Home extends BaseController
     {
         return view('dashboard');
     }
+
+    public function getDefaultPage()
+    {
+        return view('welcome_message');
+    }
 }
