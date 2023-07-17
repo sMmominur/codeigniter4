@@ -15,16 +15,15 @@ class RoleController extends Controller
     public function create()
     {
         $roleModel = new RoleModel();
+
         $data = [
             'name'        => $this->request->getVar('name'),
             'status'      => $this->request->getVar('status'),
             'description' => $this->request->getVar('description'),
-            'created_at'  => date('Y-m-d H:i:s'),
-            'updated_at'  => date('Y-m-d H:i:s'),
         ];
-        $roleModel->insert($data);
 
-        return $this->response->setJSON(['message' => 'Role created successfully.']);
+        $roleModel->insert($data);
+        return $this->response->setJSON(['message' => 'Role created successfully']);
     }
 
     public function edit($id)

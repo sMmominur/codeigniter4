@@ -72,6 +72,7 @@ class Filters extends BaseConfig
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
     public array $filters = [
+        'roles/create' => ['csrf'],
         'auth-rates' => [
         'before' => [
             'login*', 'register', 'auth/*'

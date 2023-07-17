@@ -39,7 +39,7 @@ service('auth')->routes($routes);
 #$routes->get('role', 'RoleController::index');
 
 $routes->get('roles', 'RoleController::index');
-$routes->match(['get', 'post'], 'roles/create', 'RoleController::create');
+$routes->post('roles/create', 'RoleController::create');
 $routes->match(['get', 'post'], 'roles/edit/(:num)', 'RoleController::edit/$1');
 $routes->get('roles/delete/(:num)', 'RoleController::delete/$1');
 
