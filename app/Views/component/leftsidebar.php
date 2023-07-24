@@ -21,6 +21,7 @@
 				<a href="#"><i class="las la-database"></i> <span><?= lang('left_menu.configuration');?></span>
 				 <span class="menu-arrow"></span></a>
 				<ul style="display: none;">
+				    <li><a href="<?= base_url('roles'); ?>"><?= lang('left_menu.roles'); ?></a></li>
 					<li><a href="#"><?= lang('left_menu.exam_category');?></a></li>
 					<li><a href="#"><?= lang('left_menu.subject');?></a></li>
 					<li><a href="#"><?= lang('left_menu.others');?></a></li>

@@ -6,29 +6,14 @@ use App\Controllers\BaseController;
 use Config\Services;
 use App\Traits\MyTrait;
 use App\Events\MyEvent;
-
+use CodeIgniter\HTTP\Request;
 class MyController extends BaseController
 {
     use MyTrait;
     public function index()
     {
-        $myService = Services::myService();
-
-        $result = $myService->doSomething();
-
-        echo $result;
-    }
-
-    public function calculate()
-    {
-        $calculatorService = Services::calculatorService();
-
-        $numbers = [10, 5, 2];
-        $operator = '+';
-
-        $result = $calculatorService->calculate($numbers, $operator);
-
-        echo "Result: $result";
+      echo $this->request->getUserAgent();
+        
     }
 
     public function testCache(){

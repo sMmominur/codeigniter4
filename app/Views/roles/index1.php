@@ -9,7 +9,7 @@
     <div class="col">
       <h3 class="page-title">Roles</h3>
       <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="<?= base_url('dashboard'); ?>">Dashboard</a></li>
         <li class="breadcrumb-item active">Roles</li>
       </ul>
     </div>
@@ -31,18 +31,17 @@
             <th>Role Name </th>
             <th>Status </th>
             <th>Description </th>
-            <th>Created </th>
             <th class="text-right">Action</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($roles as $role) : ?>
             <tr id="role_<?= $role['id'] ?>">
-              <td><?= $role['id'] ?></td>
-              <td><?= $role['name'] ?></td>
-              <td><?= $role['status'] ?></td>
-              <td><?= $role['description'] ?></td>
-              <td><?= $role['created_at'] ?></td>
+              <td><?= esc($role['id']) ?></td>
+              <td><?= esc($role['name']) ?></td>
+              <td><?= esc($role['status']) ?></td>
+              <td><?= esc($role['description']) ?></td>
+
               <td class="text-right">
                 <div class="dropdown dropdown-action">
                   <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -79,14 +78,17 @@
           <?= form_label('Role Name <span class="text-danger">*</span>', 'roleName') ?>
           <?= form_input(['name' => 'name', 'id' => 'roleName', 'value' => set_value('name'), 'class' => 'form-control', 'required' => 'required']) ?>
         </div>
-        <div class="form-group">
-          <?= form_label('Description <span class="text-danger">*</span>', 'roleDescr') ?>
-          <?= form_textarea(['name' => 'description', 'id' => 'roleDescr', 'value' => set_value('description'), 'rows' => '4', 'class' => 'form-control', 'required' => 'required']) ?>
-        </div>
+
         <div class="form-group">
           <?= form_label('Status', 'roleStatus', ['class' => 'col-form-label']) ?>
           <?= form_dropdown('status', ['active' => 'Active', 'inactive' => 'Inactive'], 'active', ['id' => 'roleStatus', 'class' => 'select', 'required' => 'required']) ?>
         </div>
+
+        <div class="form-group">
+          <?= form_label('Description <span class="text-danger">*</span>', 'roleDescr') ?>
+          <?= form_textarea(['name' => 'description', 'id' => 'roleDescr', 'value' => set_value('description'), 'rows' => '4', 'class' => 'form-control', 'required' => 'required']) ?>
+        </div>
+
         <div class="submit-section">
           <?= form_submit('submit', 'Submit', ['class' => 'btn btn-primary submit-btn']) ?>
         </div>
@@ -188,35 +190,24 @@
       data: requestData,
       success: function(response, status, xhr) {
         $("#add_role").modal('hide');
-        var statusData = {
-          icon: xhr.status === 200 ? 'success' : 'error',
-          title: xhr.status === 200 ? 'Role added' : 'Error occurred',
-          message: response.message,
-          timer: xhr.status === 200 ? 2000 : 3000
-        };
-        showStatusDialog(statusData);
+        if (response.errors) {
+          showValidationError(response);
+        }
+        else {
+          appendNewRow(response);
+          var statusData = {
+            icon: xhr.status === 200 ? 'success' : 'error',
+            title: xhr.status === 200 ? 'Role added' : 'Error occurred',
+            message: response.message,
+            timer: xhr.status === 200 ? 2000 : 3000
+          };
+          showStatusDialog(statusData);
+        }
         resetFields();
-        var data = JSON.parse(response);
-
-        //loadRoles();
-        var newRow = '<tr id="role_' + data.role.id + '">' +
-            '<td>' + data.role.id + '</td>' +
-            '<td>' + data.role.name + '</td>' +
-            '<td>' + data.role.status + '</td>' +
-            '<td>' + data.role.description + '</td>' +
-            '<td>' + data.role.created_at + '</td>' +
-            '<td class="text-right">' +
-            '<div class="dropdown dropdown-action">' +
-            '<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>' +
-            '<div class="dropdown-menu dropdown-menu-right">' +
-            '<a class="dropdown-item" href="#" onclick="editRole(' + data.role.id + ')" data-toggle="modal" data-target="#edit_role"><i class="fa fa-pencil m-r-5"></i> Edit</a>' +
-            '<a class="dropdown-item" href="#" onclick="deleteRole(' + data.role.id + ')" data-toggle="modal" data-target="#delete_role"><i class="fa fa-trash-o m-r-5"></i> Delete</a>' +
-            '</div></div></td></tr>';
-            $('#roleTable tbody').append(newRow);
       },
+
       error: function(xhr, textStatus, errorThrown) {
         $("#add_role").modal('hide');
-
         var statusData = {
           icon: 'error',
           title: 'Error occurred',
@@ -229,9 +220,6 @@
   });
 
 
-  /**
-   * After performing any action show the action status
-   */
   function showStatusDialog(statusData) {
     Swal.fire({
       icon: statusData.icon,
@@ -240,26 +228,48 @@
       timer: statusData.timer
     });
   }
-  /**
-   * After submitting the form reset all form data
-   */
-
+ 
   function resetFields() {
     $('#roleName').val('');
     $('#roleStatus').val('');
     $('#roleDescr').val('');
   }
 
-  // Load loads
-  function loadRoles() {
-    $.ajax({
-      url: '<?= base_url('roles') ?>',
-      type: 'GET',
-      success: function(response, status, xhr) {
-        $('#contactList').html(response);
+  function showValidationError(response) {
+
+    let obj = response.errors;
+    let message = '';
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        message += `<li>${obj[key]}</li>`;
       }
+    }
+    message += '';
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Validation error occurred',
+      html: "<ul style='text-align: left;'>" + message + "</ul>",
+      timer: 6000
     });
   }
+
+  function appendNewRow(response) {
+    var newRow = '<tr id="role_' + response.data.id + '">' +
+      '<td>' + response.data.id + '</td>' +
+      '<td>' + response.data.name + '</td>' +
+      '<td>' + response.data.status + '</td>' +
+      '<td>' + response.data.description + '</td>' +
+      '<td class="text-right">' +
+      '<div class="dropdown dropdown-action">' +
+      '<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>' +
+      '<div class="dropdown-menu dropdown-menu-right">' +
+      '<a class="dropdown-item" href="#" onclick="editRole(' + response.data.id + ')" data-toggle="modal" data-target="#edit_role"><i class="fa fa-pencil m-r-5"></i> Edit</a>' +
+      '<a class="dropdown-item" href="#" onclick="deleteRole(' + response.data.id + ')" data-toggle="modal" data-target="#delete_role"><i class="fa fa-trash-o m-r-5"></i> Delete</a>' +
+      '</div></div></td></tr>';
+    $('#roleTable tbody').append(newRow);
+  }
+
 </script>
 
 <?= $this->endSection() ?>

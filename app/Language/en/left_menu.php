@@ -10,5 +10,6 @@ return [
     'others'        => 'Others',
     'activities'    => 'Activities',
     'setting'       => 'Setting',
+    'roles'         => 'Roles',
 
 ];

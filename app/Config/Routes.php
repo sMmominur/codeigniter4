@@ -35,8 +35,8 @@ $routes->get('/', 'Home::getDefaultPage');
 $routes->get('dashboard', 'Home::index');
 
 service('auth')->routes($routes);
+// $routes->get('testing', 'TestRoleController::index');
 
-#$routes->get('role', 'RoleController::index');
 
 $routes->get('roles', 'RoleController::index');
 $routes->post('roles/create', 'RoleController::create');
