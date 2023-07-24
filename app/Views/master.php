@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <?= $this->include('component/head') ?>
-    <title>Title</title>
-    <style type="text/css"></style>
+    <title><?= $this->renderSection('title_bar_title') ?></title>
+    <style type="text/css"><?= $this->renderSection('page_specific_css') ?></style>
 </head>
 <body>
     <!-- Main Wrapper -->

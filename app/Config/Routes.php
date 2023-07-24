@@ -40,8 +40,10 @@ service('auth')->routes($routes);
 
 $routes->get('roles', 'RoleController::index');
 $routes->post('roles/create', 'RoleController::create');
-$routes->match(['get', 'post'], 'roles/edit/(:num)', 'RoleController::edit/$1');
+//$routes->match(['get', 'post'], 'roles/edit/(:num)', 'RoleController::edit/$1');
 $routes->get('roles/delete/(:num)', 'RoleController::delete/$1');
+$routes->get('roles/edit/(:num)', 'RoleController::edit/$1');
+$routes->post('roles/update', 'RoleController::update');
 
 
 
