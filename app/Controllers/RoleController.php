@@ -3,28 +3,31 @@
 namespace App\Controllers;
 
 use App\Models\RoleModel;
+use App\Controllers\BaseController;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\Services;
 
-class RoleController extends Controller
+class RoleController extends BaseController
 {
     use ResponseTrait;
 
+   
     public function index()
     {
-        $roleModel = new RoleModel();
-        $roles     = $roleModel->findAll();
-        return view('roles/index', ['roles' => $roles]);
+        $model   = new RoleModel();
+        $records = $model->findAll();
+        return view('roles/index', ['roles' => $records]);
     }
+
 
     public function create()
     {
         $roleModel = new RoleModel();
 
-     
+
         // Get the request data and sanitize
         $data = [
             'name'        => htmlspecialchars($this->request->getVar('name')),
@@ -68,9 +71,9 @@ class RoleController extends Controller
 
             // If validation passes, insert the data into the database
             $data['id'] = $roleModel->insert($data);
+            $data['total'] = $roleModel->countAll();
 
-            return $this->response->setJSON(['message' => 'Role created successfully','data' => $data ]);
-
+            return $this->response->setJSON(['message' => 'Role created successfully', 'data' => $data]);
         } catch (ValidationException $e) {
             // If validation fails, retrieve the errors and display them
             return $this->response->setJSON(['errors' => $e->getErrors()]);
@@ -107,9 +110,9 @@ class RoleController extends Controller
         if ($role === null) {
             return $this->response->setJSON(['error' => 'Role not found.'])->setStatusCode(ResponseInterface::HTTP_NOT_FOUND);
         }
-         // Perform the delete operation
-         $roleModel->delete($id);
-         return $this->response->setJSON(['message' => 'Role deleted successfully.'])->setStatusCode(ResponseInterface::HTTP_OK);
+        // Perform the delete operation
+        $roleModel->delete($id);
+        return $this->response->setJSON(['message' => 'Role deleted successfully.'])->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
     public function update()
@@ -168,11 +171,9 @@ class RoleController extends Controller
             } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to update role.']);
             }
-
         } catch (ValidationException $e) {
             // If validation fails, retrieve the errors and display them
             return $this->response->setJSON(['status' => 'error', 'errors' => $e->getErrors()]);
         }
     }
-
 }

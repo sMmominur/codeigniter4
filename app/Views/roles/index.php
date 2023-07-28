@@ -43,9 +43,9 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($roles as $role) : ?>
+          <?php foreach ($roles as $key => $role) : ?>
             <tr id="role_<?= $role['id'] ?>">
-              <td><?= esc($role['id']) ?></td>
+              <td><?= esc($key+1) ?></td>
               <td><?= esc($role['name']) ?></td>
               <td><?= esc($role['status']) ?></td>
               <td><?= esc($role['description']) ?></td>
@@ -181,6 +181,22 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
+
+$("#addItem input,#addItem textarea,#addItem option").keypress(function(event) {
+  if (event.which === 13) {
+    event.preventDefault();
+    $("#addItem").submit();
+  }
+});
+
+$("#itemUpdate input,#itemUpdate textarea,#itemUpdate option").keypress(function(event) {
+  if (event.which === 13) {
+    event.preventDefault();
+    $("#itemUpdate").submit();
+  }
+});
+
+
   /** 
    * Role Add
    */
@@ -237,7 +253,7 @@
    * Delete record
    */
 
-  $(".deleteButton").click(function() {
+   $(document).on("click", ".deleteButton", function() {
     var roleId = $(this).data('id');
     $("#deleteBtn").data('id', roleId);
   });
@@ -286,7 +302,7 @@
   /**
    * Role update
    */
-  $(".editButton").click(function() {
+  $(document).on("click", ".editButton", function() {
     var roleId = $(this).data('id');
     $.ajax({
       url: '<?= base_url('roles/edit/') ?>' + roleId,
@@ -400,7 +416,7 @@
 
   function appendNewRow(response) {
     var newRow = '<tr id="role_' + response.data.id + '">' +
-      '<td>' + response.data.id + '</td>' +
+      '<td>' + response.data.total + '</td>' +
       '<td>' + response.data.name + '</td>' +
       '<td>' + response.data.status + '</td>' +
       '<td>' + response.data.description + '</td>' +
@@ -408,8 +424,8 @@
       '<div class="dropdown dropdown-action">' +
       '<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>' +
       '<div class="dropdown-menu dropdown-menu-right">' +
-      '<a class="dropdown-item editButton" href="#" onclick="editRole(' + response.data.id + ')" data-toggle="modal" data-target="#edit_role"><i class="fa fa-pencil m-r-5"></i> Edit</a>' +
-      '<a class="dropdown-item deleteButton" href="#" onclick="deleteRole(' + response.data.id + ')" data-toggle="modal" data-target="#delete_role"><i class="fa fa-trash-o m-r-5"></i> Delete</a>' +
+      '<a class="dropdown-item editButton" href="#" data-toggle="modal" data-target="#edit_role" data-id="'+response.data.id+'"><i class="fa fa-pencil m-r-5"></i> Edit</a>' +
+      '<a class="dropdown-item deleteButton" href="#" data-toggle="modal" data-target="#delete_role" data-id="'+response.data.id+'"><i class="fa fa-trash-o m-r-5"></i> Delete</a>' +
       '</div></div></td></tr>';
     $('#roleTable tbody').prepend(newRow);
   }
