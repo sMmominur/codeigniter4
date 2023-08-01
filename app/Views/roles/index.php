@@ -45,7 +45,7 @@
         <tbody>
           <?php foreach ($roles as $key => $role) : ?>
             <tr id="role_<?= $role['id'] ?>">
-              <td><?= esc($key+1) ?></td>
+              <td><?= esc($key + 1) ?></td>
               <td><?= esc($role['name']) ?></td>
               <td><?= esc($role['status']) ?></td>
               <td><?= esc($role['description']) ?></td>
@@ -80,28 +80,32 @@
         </button>
       </div>
       <div class="modal-body">
-        <?= form_open('roles/create', ['id' => 'addItem']) ?>
-        <?= csrf_field() ?>
-        <div class="form-group">
-          <?= form_label('Role Name <span class="text-danger">*</span>', 'roleName') ?>
-          <?= form_input(['name' => 'name', 'id' => 'roleName', 'value' => set_value('name'), 'class' => 'form-control', 'required' => 'required']) ?>
-        </div>
+        <form action="roles/create" method="post" id="addItem">
+          <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+          <div class="form-group">
+            <label for="roleName">Role Name <span class="text-danger">*</span></label>
+            <input type="text" name="name" id="roleName" value="" class="form-control" required="required">
+          </div>
 
-        <div class="form-group">
-          <?= form_label('Status', 'roleStatus', ['class' => 'col-form-label']) ?>
-          <?= form_dropdown('status', ['active' => 'Active', 'inactive' => 'Inactive'], 'active', ['id' => 'roleStatus', 'class' => 'select', 'required' => 'required']) ?>
-        </div>
+          <div class="form-group">
+            <label for="roleStatus" class="col-form-label">Status</label>
+            <select name="status" id="roleStatus" class="select" required="required">
+              <option value="active" selected>Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
 
-        <div class="form-group">
-          <?= form_label('Description <span class="text-danger">*</span>', 'roleDescr') ?>
-          <?= form_textarea(['name' => 'description', 'id' => 'roleDescr', 'value' => set_value('description'), 'rows' => '4', 'class' => 'form-control', 'required' => 'required']) ?>
-        </div>
+          <div class="form-group">
+            <label for="roleDescr">Description <span class="text-danger">*</span></label>
+            <textarea name="description" id="roleDescr" rows="4" class="form-control" required="required"></textarea>
+          </div>
 
-        <div class="submit-section">
-          <?= form_submit('submit', 'Submit', ['class' => 'btn btn-primary submit-btn']) ?>
-        </div>
-        <?= form_close() ?>
+          <div class="submit-section">
+            <input type="submit" name="submit" value="Submit" class="btn btn-primary submit-btn">
+          </div>
+        </form>
       </div>
+
     </div>
   </div>
 </div>
@@ -119,29 +123,33 @@
         </button>
       </div>
       <div class="modal-body">
-        <?= form_open('', ['id' => 'itemUpdate']) ?>
-        <?= csrf_field() ?>
-        <input type="hidden" name="id" id="roleIdUpdate">
-        <div class="form-group">
-          <?= form_label('Role Name <span class="text-danger">*</span>', 'roleNameUpdate') ?>
-          <?= form_input(['name' => 'name', 'id' => 'roleNameUpdate', 'value' => set_value('name'), 'class' => 'form-control', 'required' => 'required']) ?>
-        </div>
+        <form action="" method="post" id="itemUpdate">
+          <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+          <input type="hidden" name="id" id="roleIdUpdate">
+          <div class="form-group">
+            <label for="roleNameUpdate">Role Name <span class="text-danger">*</span></label>
+            <input type="text" name="name" id="roleNameUpdate" value="" class="form-control" required="required">
+          </div>
 
-        <div class="form-group">
-          <?= form_label('Status', 'roleStatusUpdate', ['class' => 'col-form-label']) ?>
-          <?= form_dropdown('status', ['active' => 'Active', 'inactive' => 'Inactive'], 'active', ['id' => 'roleStatusUpdate', 'class' => 'select', 'required' => 'required']) ?>
-        </div>
+          <div class="form-group">
+            <label for="roleStatusUpdate" class="col-form-label">Status</label>
+            <select name="status" id="roleStatusUpdate" class="select" required="required">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
 
-        <div class="form-group">
-          <?= form_label('Description <span class="text-danger">*</span>', 'roleDescrUpdate') ?>
-          <?= form_textarea(['name' => 'description', 'id' => 'roleDescrUpdate', 'value' => set_value('description'), 'rows' => '4', 'class' => 'form-control', 'required' => 'required']) ?>
-        </div>
+          <div class="form-group">
+            <label for="roleDescrUpdate">Description <span class="text-danger">*</span></label>
+            <textarea name="description" id="roleDescrUpdate" rows="4" class="form-control" required="required"></textarea>
+          </div>
 
-        <div class="submit-section">
-          <?= form_submit('submit', 'Update', ['class' => 'btn btn-primary submit-btn']) ?>
-        </div>
-        <?= form_close() ?>
+          <div class="submit-section">
+            <input type="submit" name="submit" value="Update" class="btn btn-primary submit-btn">
+          </div>
+        </form>
       </div>
+
     </div>
   </div>
 </div>
@@ -180,21 +188,19 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+  $("#addItem input,#addItem textarea,#addItem option").keypress(function(event) {
+    if (event.which === 13) {
+      event.preventDefault();
+      $("#addItem").submit();
+    }
+  });
 
-
-$("#addItem input,#addItem textarea,#addItem option").keypress(function(event) {
-  if (event.which === 13) {
-    event.preventDefault();
-    $("#addItem").submit();
-  }
-});
-
-$("#itemUpdate input,#itemUpdate textarea,#itemUpdate option").keypress(function(event) {
-  if (event.which === 13) {
-    event.preventDefault();
-    $("#itemUpdate").submit();
-  }
-});
+  $("#itemUpdate input,#itemUpdate textarea,#itemUpdate option").keypress(function(event) {
+    if (event.which === 13) {
+      event.preventDefault();
+      $("#itemUpdate").submit();
+    }
+  });
 
 
   /** 
@@ -221,7 +227,7 @@ $("#itemUpdate input,#itemUpdate textarea,#itemUpdate option").keypress(function
       data: requestData,
       success: function(response, status, xhr) {
         $("#add_role").modal('hide');
-        if (response.errors) {
+        if (response.status === 'error') {
           showValidationError(response);
         } else {
           appendNewRow(response);
@@ -253,7 +259,7 @@ $("#itemUpdate input,#itemUpdate textarea,#itemUpdate option").keypress(function
    * Delete record
    */
 
-   $(document).on("click", ".deleteButton", function() {
+  $(document).on("click", ".deleteButton", function() {
     var roleId = $(this).data('id');
     $("#deleteBtn").data('id', roleId);
   });
@@ -309,6 +315,7 @@ $("#itemUpdate input,#itemUpdate textarea,#itemUpdate option").keypress(function
       type: 'GET',
       dataType: 'json',
       success: function(response, status, xhr) {
+        console.log(response.data);
         $("#roleIdUpdate").val(response.data.id);
         $("#roleNameUpdate").val(response.data.name);
         $("#roleStatusUpdate").val(response.data.status);
@@ -424,8 +431,8 @@ $("#itemUpdate input,#itemUpdate textarea,#itemUpdate option").keypress(function
       '<div class="dropdown dropdown-action">' +
       '<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>' +
       '<div class="dropdown-menu dropdown-menu-right">' +
-      '<a class="dropdown-item editButton" href="#" data-toggle="modal" data-target="#edit_role" data-id="'+response.data.id+'"><i class="fa fa-pencil m-r-5"></i> Edit</a>' +
-      '<a class="dropdown-item deleteButton" href="#" data-toggle="modal" data-target="#delete_role" data-id="'+response.data.id+'"><i class="fa fa-trash-o m-r-5"></i> Delete</a>' +
+      '<a class="dropdown-item editButton" href="#" data-toggle="modal" data-target="#edit_role" data-id="' + response.data.id + '"><i class="fa fa-pencil m-r-5"></i> Edit</a>' +
+      '<a class="dropdown-item deleteButton" href="#" data-toggle="modal" data-target="#delete_role" data-id="' + response.data.id + '"><i class="fa fa-trash-o m-r-5"></i> Delete</a>' +
       '</div></div></td></tr>';
     $('#roleTable tbody').prepend(newRow);
   }
@@ -440,7 +447,6 @@ $("#itemUpdate input,#itemUpdate textarea,#itemUpdate option").keypress(function
     row.find('td:nth-child(3)').text(data.status);
     row.find('td:nth-child(4)').text(data.description);
   }
-
 </script>
 
 <?= $this->endSection() ?>

@@ -66,17 +66,17 @@ class RoleController extends BaseController
             $validation->setRules($rules, $messages);
 
             if (!$validation->withRequest($this->request)->run($data)) {
-                return $this->response->setJSON(['errors' => $validation->getErrors()]);
+                return $this->response->setJSON(['status' => 'error','errors' => $validation->getErrors()]);
             }
 
             // If validation passes, insert the data into the database
             $data['id'] = $roleModel->insert($data);
             $data['total'] = $roleModel->countAll();
 
-            return $this->response->setJSON(['message' => 'Role created successfully', 'data' => $data]);
+            return $this->response->setJSON([ 'status' => 'success', 'message' => 'Role created successfully', 'data' => $data]);
         } catch (ValidationException $e) {
             // If validation fails, retrieve the errors and display them
-            return $this->response->setJSON(['errors' => $e->getErrors()]);
+            return $this->response->setJSON(['status' => 'error', 'errors' => $e->getErrors()]);
         }
     }
 
